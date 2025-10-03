@@ -1,75 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--
+  فایل: infinite-loading.html
+  توضیح: یک صفحهٔ تک‌فایل (HTML/CSS) که فقط یک لودینگِ زیبا و بی‌نهایت را نشان می‌دهد.
+  استفاده: این فایل را به‌عنوان یک فایل .html ذخیره کرده و در مرورگر باز کنید.
+--><!doctype html>
+
+<html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A simple HTML webpage">
-  <title>My Simple Webpage</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لودینگ بی‌نهایت</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px 0;
-      text-align: center;
-    }
-    nav {
-      background-color: #333;
-      display: flex;
-      justify-content: center;
-    }
-    nav a {
-      color: white;
-      padding: 14px 20px;
-      text-decoration: none;
-      display: inline-block;
-    }
-    nav a:hover {
-      background-color: #575757;
-    }
-    .container {
-      padding: 20px;
-    }
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      margin-top: 20px;
-    }
+    /* ریست ساده */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}/* بدنه تمام‌صفحه */
+body{
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg,#0f172a 0%, #0b1220 50%, #071022 100%);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* پس‌زمینهٔ موجِ آرام (حرکت آرام برای جلوهٔ پویا) */
+.ambient {
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.45;
+  background: radial-gradient(circle at 20% 30%, rgba(99,102,241,0.08), transparent 10%),
+              radial-gradient(circle at 80% 70%, rgba(16,185,129,0.06), transparent 12%);
+  animation: float 12s linear infinite;
+}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+
+/* کانتینر لودینگ */
+.stage{position:relative;z-index:1;display:flex;flex-direction:column;gap:18px;align-items:center}
+
+/* حلقهٔ چرخان */
+.ring{
+  width:120px;height:120px;border-radius:50%;display:grid;place-items:center;position:relative;
+  background:conic-gradient(from 0deg, rgba(255,255,255,0.08), rgba(255,255,255,0.14));
+  mask: radial-gradient(farthest-side, transparent 72%, black 73%);
+  animation: spin 1.6s linear infinite;
+  box-shadow:0 8px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* مرکز حلقه: نقطهٔ پالس‌زن */
+.dot{
+  width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#fff,#dbeafe);
+  box-shadow:0 6px 20px rgba(99,102,241,0.24);
+  transform-origin:center;animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.28)}100%{transform:scale(1)}}
+
+/* متن کوچک زیر لودینگ */
+.label{
+  font-size:14px;color:rgba(255,255,255,0.9);letter-spacing:0.08em;
+  text-transform:uppercase;font-weight:600;opacity:0.95
+}
+
+/* ردیف نقاط متحرک پایین برای حس «ادامه‌دار بودن» */
+.dots{
+  display:flex;gap:8px;align-items:center;justify-content:center;margin-top:6px
+}
+.dots > span{
+  width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.22);
+  transform:translateY(0);animation: bounce 1s infinite ease-in-out;
+}
+.dots > span:nth-child(2){animation-delay:0.12s}
+.dots > span:nth-child(3){animation-delay:0.24s}
+.dots > span:nth-child(4){animation-delay:0.36s}
+@keyframes bounce{0%,100%{transform:translateY(0);opacity:0.6}50%{transform:translateY(-10px);opacity:1}}
+
+/* حالت کاربر با ترجیح کاهش حرکت */
+@media (prefers-reduced-motion: reduce){
+  .ambient, .ring, .dot, .dots > span{animation:none}
+}
+
+/* نمایش در اندازهٔ خیلی کوچک (موبایل) */
+@media (max-width:420px){
+  .ring{width:92px;height:92px}
+  .dot{width:20px;height:20px}
+}
+
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Welcome to My Webpage</h1>
-  </header>
-
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <div class="container">
-    <h2 id="home">Home</h2>
-    <p>This is a simple webpage built with HTML and CSS. You can add your content here.</p>
-
-    <h2 id="about">About</h2>
-    <p>This section can contain information about you or your project.</p>
-
-    <h2 id="contact">Contact</h2>
-    <p>You can put your contact details or a form here.</p>
+  <div class="ambient" aria-hidden="true"></div>  <main class="stage" role="status" aria-live="polite">
+    <div class="ring" aria-hidden="true">
+      <div class="dot"></div>
+    </div><div style="text-align:center;">
+  <div class="label">در حال بارگذاری</div>
+  <div class="dots" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
   </div>
+</div>
 
-  <footer>
-    <p>&copy; 2025 My Simple Webpage</p>
-  </footer>
-
-</body>
+  </main>  <!-- این صفحه بی‌نهایت لودینگ را نشان می‌دهد؛ هیچ JS اضافی لازم نیست. --></body>
 </html>
