@@ -1,103 +1,35 @@
-<!--
-  فایل: infinite-loading.html
-  توضیح: یک صفحهٔ تک‌فایل (HTML/CSS) که فقط یک لودینگِ زیبا و بی‌نهایت را نشان می‌دهد.
-  استفاده: این فایل را به‌عنوان یک فایل .html ذخیره کرده و در مرورگر باز کنید.
---><!doctype html>
-
-<html lang="fa">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>👉👈</title>
-  <style>
-    /* ریست ساده */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}/* بدنه تمام‌صفحه */
-body{
-  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: linear-gradient(135deg,#0f172a 0%, #0b1220 50%, #071022 100%);
-  color:#fff;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  height:100vh;
-  overflow:hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👉👈</title>
+    <style>
+        /*
+         * این بخش باعث واکنش‌گرا شدن تصویر می‌شود.
+         * با تعیین عرض حداکثر (max-width) به 100%، تصویر هیچ‌گاه بزرگتر از
+         * عرض عنصر دربرگیرنده خود (در اینجا body) نخواهد شد.
+         * ارتفاع (height) به صورت خودکار (auto) تنظیم می‌شود تا نسبت
+         * ابعاد تصویر حفظ شود.
+        */
+        .responsive-image {
+            max-width: 100%;
+            height: auto;
+            display: block; /* برای جلوگیری از ایجاد فضای خالی زیر تصویر */
+            margin: 0 auto; /* برای قرار گرفتن تصویر در وسط صفحه */
+        }
 
-/* پس‌زمینهٔ موجِ آرام (حرکت آرام برای جلوهٔ پویا) */
-.ambient {
-  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.45;
-  background: radial-gradient(circle at 20% 30%, rgba(99,102,241,0.08), transparent 10%),
-              radial-gradient(circle at 80% 70%, rgba(16,185,129,0.06), transparent 12%);
-  animation: float 12s linear infinite;
-}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
-
-/* کانتینر لودینگ */
-.stage{position:relative;z-index:1;display:flex;flex-direction:column;gap:18px;align-items:center}
-
-/* حلقهٔ چرخان */
-.ring{
-  width:120px;height:120px;border-radius:50%;display:grid;place-items:center;position:relative;
-  background:conic-gradient(from 0deg, rgba(255,255,255,0.08), rgba(255,255,255,0.14));
-  mask: radial-gradient(farthest-side, transparent 72%, black 73%);
-  animation: spin 1.6s linear infinite;
-  box-shadow:0 8px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* مرکز حلقه: نقطهٔ پالس‌زن */
-.dot{
-  width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#fff,#dbeafe);
-  box-shadow:0 6px 20px rgba(99,102,241,0.24);
-  transform-origin:center;animation:pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.28)}100%{transform:scale(1)}}
-
-/* متن کوچک زیر لودینگ */
-.label{
-  font-size:14px;color:rgba(255,255,255,0.9);letter-spacing:0.08em;
-  text-transform:uppercase;font-weight:600;opacity:0.95
-}
-
-/* ردیف نقاط متحرک پایین برای حس «ادامه‌دار بودن» */
-.dots{
-  display:flex;gap:8px;align-items:center;justify-content:center;margin-top:6px
-}
-.dots > span{
-  width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.22);
-  transform:translateY(0);animation: bounce 1s infinite ease-in-out;
-}
-.dots > span:nth-child(2){animation-delay:0.12s}
-.dots > span:nth-child(3){animation-delay:0.24s}
-.dots > span:nth-child(4){animation-delay:0.36s}
-@keyframes bounce{0%,100%{transform:translateY(0);opacity:0.6}50%{transform:translateY(-10px);opacity:1}}
-
-/* حالت کاربر با ترجیح کاهش حرکت */
-@media (prefers-reduced-motion: reduce){
-  .ambient, .ring, .dot, .dots > span{animation:none}
-}
-
-/* نمایش در اندازهٔ خیلی کوچک (موبایل) */
-@media (max-width:420px){
-  .ring{width:92px;height:92px}
-  .dot{width:20px;height:20px}
-}
-
-  </style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div class="ambient" aria-hidden="true"></div>  <main class="stage" role="status" aria-live="polite">
-    <div class="ring" aria-hidden="true">
-      <div class="dot"></div>
-    </div><div style="text-align:center;">
-  <div class="label">در حال بارگذاری</div>
-  <div class="dots" aria-hidden="true">
-    <span></span><span></span><span></span><span></span>
-  </div>
-</div>
 
-  </main>  <!-- این صفحه بی‌نهایت لودینگ را نشان می‌دهد؛ هیچ JS اضافی لازم نیست. --></body>
+    <img src="https://tse4.mm.bing.net/th/id/OIP.txrhXEoIPs_DUQ_hK2fPmQHaE6?rs=1&pid=ImgDetMain&o=7&rm=3" 
+         class="responsive-image">
+
+</body>
 </html>
