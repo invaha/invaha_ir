@@ -5,32 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👉👈</title>
     <style>
-        /* حذف هرگونه حاشیه و فضای خالی پیش‌فرض از صفحه */
+  
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            overflow: hidden; /* جلوگیری از اسکرول خوردن صفحه */
+            overflow: hidden; 
         }
 
-        /*
-         * استایل اصلی برای تصویر تمام صفحه
-        */
+
         .fullscreen-image {
-            /* تصویر را به اندازه کامل عرض و ارتفاع صفحه نمایش در می‌آورد */
-            width: 100vw; /* 100% of viewport width */
-            height: 100vh; /* 100% of viewport height */
 
-            /*
-             * این ویژگی مهم‌ترین بخش کار است.
-             * تصویر را به گونه‌ای تغییر اندازه می‌دهد که کل کادر را بپوشاند.
-             * نسبت ابعاد تصویر حفظ می‌شود و اگر لازم باشد، بخش‌هایی از تصویر
-             * برای پر کردن کادر بریده (crop) می‌شود.
-            */
-            object-fit: cover;
+ 
+            width: 100vw; 
+            height: 100vh;
 
-            /* برای اطمینان از قرارگیری در موقعیت صحیح */
+            object-fit: contain;
+
+  
             position: absolute;
             top: 0;
             left: 0;
@@ -48,7 +41,7 @@
 
 
     <script>
-        // 1. لیست لینک‌های خود را در اینجا وارد کنید
+
         const links = [
             "https://plus.unsplash.com/premium_photo-1676478746990-4ef5c8ef234a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687",
             "https://plus.unsplash.com/premium_photo-1676475964992-6404b8db0b53?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Zmxvd2VyfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=1000",
