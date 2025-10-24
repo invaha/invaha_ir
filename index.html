@@ -39,9 +39,51 @@
 </head>
 <body>
 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/%E3%81%B2%E3%81%9F%E3%81%A1%E6%B5%B7%E6%B5%9C%E5%85%AC%E5%9C%92%E3%81%AE%E3%83%8D%E3%83%A2%E3%83%95%E3%82%A3%E3%83%A907.jpg/1200px-%E3%81%B2%E3%81%9F%E3%81%A1%E6%B5%B7%E6%B5%9C%E5%85%AC%E5%9C%92%E3%81%AE%E3%83%8D%E3%83%A2%E3%83%95%E3%82%A3%E3%83%A907.jpg?20190504211833"
+    <img id="myImage"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/%E3%81%B2%E3%81%9F%E3%81%A1%E6%B5%B7%E6%B5%9C%E5%85%AC%E5%9C%92%E3%81%AE%E3%83%8D%E3%83%A2%E3%83%95%E3%82%A3%E3%83%A907.jpg/1200px-%E3%81%B2%E3%81%9F%E3%81%A1%E6%B5%B7%E6%B5%9C%E5%85%AC%E5%9C%92%E3%81%AE%E3%83%8D%E3%83%A2%E3%83%95%E3%82%A3%E3%83%A907.jpg?20190504211833"
          alt="توضیح تصویر شما در اینجا"
          class="fullscreen-image">
 
+
+
+
+    <script>
+        // 1. لیست لینک‌های خود را در اینجا وارد کنید
+        const links = [
+            "https://plus.unsplash.com/premium_photo-1676478746990-4ef5c8ef234a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687",
+            "https://plus.unsplash.com/premium_photo-1676475964992-6404b8db0b53?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Zmxvd2VyfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=1000",
+            "https://plus.unsplash.com/premium_photo-1676068243733-df1880c2aef8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Zmxvd2VyfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=1000",
+                        "https://images.unsplash.com/photo-1516205651411-aef33a44f7c2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZsb3dlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=1000",
+            "https://images.unsplash.com/photo-1523224042829-4731dd15a3bb?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZsb3dlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=1000",
+                        "https://plus.unsplash.com/premium_photo-1683121484963-a491b935780b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZsb3dlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=1000",
+            "https://images.unsplash.com/photo-1468327768560-75b778cbb551?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZsb3dlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=1000",
+                        "https://media.istockphoto.com/id/2183200931/photo/flower-in-macewan-terrace-garden-and-the-riverwood-conservancy-mississauga-canada.webp?a=1&b=1&s=612x612&w=0&k=20&c=hum64GT6U8cNpfYl9K8aFjX1VAkJPIKypnbj3LkPLxk=",
+            "https://media.istockphoto.com/id/2208723776/photo/bridesmaid-in-yellow-dress-holding-bouquet-of-flowers-with-copy-space.webp?a=1&b=1&s=612x612&w=0&k=20&c=iiOArpRp8BmFUKM8z8tXSGrkIn6P2yaVMlUFnxvyGRw=",
+                        "https://plus.unsplash.com/premium_photo-1703689520237-3667a9b43453?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cm9zZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1559563362-c667ba5f5480?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cm9zZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cm9zZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1547617774-2eb320ad93f5?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHJvc2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJvc2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1495231916356-a86217efff12?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvc2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3ByaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3ByaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1518943701174-17e4aff936d4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1620694563886-c3a80ec55f41?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1485148470689-9e57a229c0f8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1559150182-a7144f7628f9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1614888773556-4bf9ab1a8675?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDR8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+            "https://plus.unsplash.com/premium_photo-1663954862772-a29434a37222?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://plus.unsplash.com/premium_photo-1677682897278-a0565677945a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjF8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+            "https://images.unsplash.com/photo-1555931156-73ca648e3c9c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njh8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300",
+                        "https://images.unsplash.com/photo-1556486941-203a90a452c0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzZ8fHNwcmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=300"
+        ];
+        const randomIndex = Math.floor(Math.random() * links.length);
+
+        const imageElement = document.getElementById("myImage");
+        imageElement.src = links[randomIndex];
+
+
+        
+    </script>
 </body>
 </html>
