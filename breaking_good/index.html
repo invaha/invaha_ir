@@ -131,6 +131,51 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: 18px;
             color: #ced4da;
         }
+
+@media (max-width: 600px) {
+    .container {
+        padding: 25px 15px; /* کمتر کردن فاصله‌های داخلی کادر شیشه‌ای */
+        width: 85%;
+        border-radius: 15px; /* کمی گردی کمتر برای موبایل */
+    }
+    
+    .character-img {
+        width: 110px; /* کوچک‌تر کردن عکس کاراکتر */
+        height: 110px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 20px; /* کوچک‌تر کردن عنوان اصلی */
+        margin-bottom: 15px;
+    }
+
+    .quote {
+        font-size: 18px; /* کوچک‌تر کردن متن دیالوگ تا تو گوشی راحت خوانده بشه */
+        margin: 15px 0;
+    }
+
+    /* کوچک کردن سایز گیومه‌ها */
+    .quote::before { font-size: 25px; }
+    .quote::after { font-size: 25px; }
+
+    .character-name {
+        font-size: 16px;
+    }
+
+    .episode-info {
+        font-size: 13px;
+    }
+
+    button {
+        margin-top: 25px;
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+}
+
+
+        
     </style>
 </head>
 <body id="page-body">
