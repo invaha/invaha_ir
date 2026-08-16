@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>better tell amir</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; text-align: center; margin-top: 50px; background: #f4f4f9; }
+        textarea { width: 80%; max-width: 400px; height: 150px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+        button { margin-top: 15px; padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #27ae60; }
+        #status { margin-top: 15px; color: #555; }
+    </style>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+</head>
+<body>
+
+    <h2>(:better tell amir</h2>
+    <textarea id="messageBox" placeholder="پیام خود را بنویسید..."></textarea><br>
+    <button onclick="sendEncryptedMessage()">ارسال امن</button>
+    
+    <div id="status"></div>
+
+    <script>
+        const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHmUHcjpLcc650/s77ZHti97oamv0yoC1UtBL+QkcWIieQFF72nmgVPGRLsAWC/M1/XrjTAuJn92q5c8WAi7KC1bkTBag76HCep1jN7VOAr3O2HTM3TZ4S9ZKFv68EKLiQPm6whgM6hrIWgK9Z57m7FLqJKXdi8g9tcMsLIQz3/VVnZUry9nqabi1fhajuQ+zErxKUYrpydGnE5XD8CWRPG5KEFVWcNmC6jiK6BHrt02m4ab3Pyi7hkB18/4wGnrWcG5bqGdLnIv43s+JJMXUG4DZuJHXJ7OVX7eMpeD3mHccCi++gfVsPVUug8p0yIQ/0SnA+LHDc0teuuSylMFAqTS5Bw/RdP+LAGb3YSopgBRfOITr2v1C2c0uz91kQKKpOmxrSh4gEFqfxugtBzd/kd3rvttXBLbmVipgrHXwcNbmLQey6ZvBNRiAlzAVvx649eupEyWGLSZTFFfVlMJ9wIL6BXl8rbXpBmUupAJvPWMoY/tM9AYEd6N4Ijz91oIfZ2BLSUTc2n5CypfBvPSSj3OMy/j6CUkBL4OvI8Liw7ijAI8X/mdaEsCO17p6lAwWAf1yH5dGicvnm4rnl/s4GqPZur5udPxO3ExNAuG9t9cHkxpmhBjxuCw/Wj1HswwzQdsVD9vaUCAwEAAQ==
+-----END PUBLIC KEY-----`;
+
+        const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbxZVQX6eTHkf22qu3xYdNL8WpoDX_1GllzxZDUJhYT6xcjpxG-eIYDEtzq_nrWfyZSR_Q/exec";
+
+        async function sendEncryptedMessage() {
+            const msg = document.getElementById('messageBox').value;
+            const statusDiv = document.getElementById('status');
+
+            if (!msg.trim()) {
+                statusDiv.innerText = "لطفاً یک پیام بنویسید.";
+                return;
+            }
+
+            statusDiv.innerText = "در حال رمزنگاری و ارسال...";
+
+
+            const encryptor = new JSEncrypt();
+            encryptor.setPublicKey(PUBLIC_KEY);
+            const encryptedData = encryptor.encrypt(msg);
+
+            if (!encryptedData) {
+                statusDiv.innerText = "خطا در رمزنگاری پیام!";
+                return;
+            }
+
+            try {
+                const formData = new URLSearchParams();
+                formData.append('message', encryptedData);
+
+                const response = await fetch(GOOGLE_APP_URL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+
+                const result = await response.json();
+                if (result.status === "success") {
+                    statusDiv.innerText = "پیام شما با موفقیت و به صورت رمزنگاری شده ارسال شد!";
+                    document.getElementById('messageBox').value = "";    
+                } else {
+                    statusDiv.innerText = "خطا در ذخیره پیام.";
+                }
+            } catch (error) {
+                console.error(error);
+                statusDiv.innerText = "مشکلی در ارتباط با سرور پیش آمد.";
+            }
+        }
+    </script>
+</body>
+</html>
