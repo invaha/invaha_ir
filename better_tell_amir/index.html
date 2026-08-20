@@ -29,43 +29,36 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
 
         const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbxZVQX6eTHkf22qu3xYdNL8WpoDX_1GllzxZDUJhYT6xcjpxG-eIYDEtzq_nrWfyZSR_Q/exec";
 
+         async function hybridEncrypt(text, publicKeyPem) {
+  
+            const aesKey = await window.crypto.subtle.generateKey(
+                { name: "AES-GCM", length: 256 },
+                true,
+                ["encrypt", "decrypt"]
+            );
+            const iv = window.crypto.getRandomValues(new Uint8Array(12));
 
+            const encodedText = new TextEncoder().encode(text);
+            const encryptedDataBuffer = await window.crypto.subtle.encrypt(
+                { name: "AES-GCM", iv: iv },
+                aesKey,
+                encodedText
+            );
 
+            const rawAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
+            const aesKeyBase64 = btoa(String.fromCharCode(...new Uint8Array(rawAesKey)));
 
+            const rsaEncryptor = new JSEncrypt();
+            rsaEncryptor.setPublicKey(publicKeyPem);
+            const encryptedAesKey = rsaEncryptor.encrypt(aesKeyBase64);
 
+            if (!encryptedAesKey) return null;
 
+            const ivBase64 = btoa(String.fromCharCode(...iv));
+            const dataBase64 = btoa(String.fromCharCode(...new Uint8Array(encryptedDataBuffer)));
 
-       function encryptLongText(text, publicKey) {
-            const encryptor = new JSEncrypt();
-            encryptor.setPublicKey(publicKey);
-
-        
-            const encodedText = encodeURIComponent(text);
-
-            const chunkSize = 200; 
-            const encryptedChunks = [];
-
-            for (let i = 0; i < encodedText.length; i += chunkSize) {
-                const chunk = encodedText.substring(i, i + chunkSize);
-                const encryptedChunk = encryptor.encrypt(chunk);
-                if (!encryptedChunk) {
-                    return null;
-                }
-                encryptedChunks.push(encryptedChunk);
-            }
-
-    
-            return encryptedChunks.join(":::CHUNK:::");
+            return `${encryptedAesKey}|${ivBase64}|${dataBase64}`;
         }
-
-
-
-
-
-
-
-
-
         
         async function sendEncryptedMessage() {
             const msg = document.getElementById('messageBox').value;
@@ -79,7 +72,7 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
             statusDiv.innerText = "در حال رمزنگاری و ارسال...";
 
 
-            const encryptedData = encryptLongText(msg, PUBLIC_KEY);
+            const encryptedData = await hybridEncrypt(msg, PUBLIC_KEY);
             
             if (!encryptedData) {
                 statusDiv.innerText = "خطا در رمزنگاری پیام!";
