@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>better tell amir</title>
     <style>
+        body.dark-mode {
+            background: #1e1e2e;
+            color: #cdd6f4;
+        }
+        body.dark-mode textarea {
+            background: #313244;
+            color: #cdd6f4;
+            border-color: #45475a;
+        }
+        body.dark-mode #status {
+            color: #a6adc8;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            margin-top: 0;
+            padding: 8px 12px;
+            border-radius: 50%;
+            font-size: 18px;
+            background: #e6e9ef;
+            color: #333;
+        }
+        body.dark-mode .theme-toggle {
+            background: #313244;
+            color: #fff;
+        }
         body { font-family: Tahoma, sans-serif; text-align: center; margin-top: 50px; background: #f4f4f9; }
         textarea { width: 80%; max-width: 400px; height: 150px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
         button { margin-top: 15px; padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer; }
@@ -15,7 +42,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
 </head>
 <body>
-
+    <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙</button>
     <h2>(:better tell amir</h2>
     <textarea id="messageBox" placeholder="پیام خود را بنویسید..."></textarea><br>
     <button onclick="sendEncryptedMessage()">ارسال امن</button>
@@ -103,6 +130,25 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
                 statusDiv.innerText = "مشکلی در ارتباط با سرور پیش آمد.";
             }
         }
+
+        
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeBtn').innerText = '☀️';
+            }
+        }
+        
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            document.getElementById('themeBtn').innerText = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        
+        window.addEventListener('DOMContentLoaded', initTheme);
     </script>
 </body>
 </html>
