@@ -29,6 +29,44 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
 
         const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbxZVQX6eTHkf22qu3xYdNL8WpoDX_1GllzxZDUJhYT6xcjpxG-eIYDEtzq_nrWfyZSR_Q/exec";
 
+
+
+
+
+
+
+       function encryptLongText(text, publicKey) {
+            const encryptor = new JSEncrypt();
+            encryptor.setPublicKey(publicKey);
+
+        
+            const encodedText = encodeURIComponent(text);
+
+            const chunkSize = 200; 
+            const encryptedChunks = [];
+
+            for (let i = 0; i < encodedText.length; i += chunkSize) {
+                const chunk = encodedText.substring(i, i + chunkSize);
+                const encryptedChunk = encryptor.encrypt(chunk);
+                if (!encryptedChunk) {
+                    return null;
+                }
+                encryptedChunks.push(encryptedChunk);
+            }
+
+    
+            return encryptedChunks.join(":::CHUNK:::");
+        }
+
+
+
+
+
+
+
+
+
+        
         async function sendEncryptedMessage() {
             const msg = document.getElementById('messageBox').value;
             const statusDiv = document.getElementById('status');
@@ -41,10 +79,8 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
             statusDiv.innerText = "در حال رمزنگاری و ارسال...";
 
 
-            const encryptor = new JSEncrypt();
-            encryptor.setPublicKey(PUBLIC_KEY);
-            const encryptedData = encryptor.encrypt(msg);
-
+            const encryptedData = encryptLongText(msg, PUBLIC_KEY);
+            
             if (!encryptedData) {
                 statusDiv.innerText = "خطا در رمزنگاری پیام!";
                 return;
