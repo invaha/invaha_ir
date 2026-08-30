@@ -96,8 +96,8 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
                 return;
             }
 
-            statusDiv.innerText = "در حال رمزنگاری و ارسال...";
 
+            statusDiv.innerText = "در حال رمزنگاری و ارسال...\nلطفا تا پایان فرایند ارسال منتظر بمانید. ";
 
             const encryptedData = await hybridEncrypt(msg, PUBLIC_KEY);
             
@@ -120,7 +120,7 @@ MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvKKponF5Og4x59OaJhCxyq+qiBrd2+mEcSHm
 
                 const result = await response.json();
                 if (result.status === "success") {
-                    statusDiv.innerText = "پیام شما با موفقیت و به صورت رمزنگاری شده ارسال شد!";
+                    statusDiv.innerText = "پیام شما با موفقیت و به صورت ناشناس ارسال شد!";
                     document.getElementById('messageBox').value = "";    
                 } else {
                     statusDiv.innerText = "خطا در ذخیره پیام.";
